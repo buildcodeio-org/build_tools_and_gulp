@@ -19,6 +19,30 @@
 * we will talk about how we can “compile” our javascript and why we need to “compile” javascript in the first place
 * we will create a small API based reddit search using the new concepts we learned
 
+## Class Rundown
+------
+
+Here is the agenda for today's class.
+
+#### Writing Node Scripts
+We will kick things off by writing some simple NodeJS scripts, just to get the hang of how javascript works outside of the browser.
+
+#### Useful Node Scripts
+Having build simple Node apps, we will learn how to use NPM (node package manager) to build out more useful node js scripts, including: 
+1. a node powered file copy script
+2. a command line movie search
+
+We will learn how Node scripts can be used in your "everyday" coding habits...and make it more efficient.
+
+#### Writing Smarter FrontendJS
+Finally, will put our Node skills to use and bring some of the techniques we learned to the frontend. In this portion of the class, we will:
+
+1. write scripts that take your javascript files and smush them all into one file
+2. write scripts that automatically minnify you code
+3. write scripts that "watch" your javascript files and does certain things everytime you change your code
+4. build out a reddit API based search app that uses NodejS philosophy and technology for writing javascript code (thanks to scripts from items 1, 2, and 3) 
+
+
 ## INSTALLING NODE.JS
 ------
 
@@ -943,4 +967,15 @@ $ gulp
 
 without any tasks. 
 
+## Putting it all together
+------
 
+And finally, you are expect to rebuild [this webpage](http://buildcodeio.github.io/redditexample/index.html) using all the techniques covered in this class. 
+
+### Requirements
+
+1. must have a gulp file set up
+2. browserify must be used to transform require() statments into one bundle.js file
+3. The individual codebase itself should be separated into javascript modules and then required into a single startup js file
+
+<div class="github-card" data-user="buildcodeio" data-repo="redditexample"></div>

@@ -25,6 +25,9 @@
                     <div class="item item__active">
                         <b class="header"><a href="#topic-breakdown">Topic Breakdown</a></b>
                     </div>
+                    <div class="item item__active">
+                        <b class="header"><a href="#class-rundown">Class Rundown</a></b>
+                    </div>
 
                     <div class="item">
                         <b class="header"><a href="#installing-node-js">Installing Node.JS</a></b>
@@ -60,6 +63,10 @@
                         </div>
                     </div>
 
+                    <div class="item item__active">
+                        <b class="header"><a href="#putting-it-all-together">Putting It All Together</a></b>
+                    </div>
+
                 </div>
             </div><!-- book__col -->
 
@@ -88,6 +95,26 @@
 <li>we will talk about how we can “compile” our javascript and why we need to “compile” javascript in the first place</li>
 <li>we will create a small API based reddit search using the new concepts we learned</li>
 </ul>
+<h2 id="class-rundown">Class Rundown</h2>
+<hr>
+<p>Here is the agenda for today's class.</p>
+<h4 id="writing-node-scripts">Writing Node Scripts</h4>
+<p>We will kick things off by writing some simple NodeJS scripts, just to get the hang of how javascript works outside of the browser.</p>
+<h4 id="useful-node-scripts">Useful Node Scripts</h4>
+<p>Having build simple Node apps, we will learn how to use NPM (node package manager) to build out more useful node js scripts, including: </p>
+<ol>
+<li>a node powered file copy script</li>
+<li>a command line movie search</li>
+</ol>
+<p>We will learn how Node scripts can be used in your "everyday" coding habits...and make it more efficient.</p>
+<h4 id="writing-smarter-frontendjs">Writing Smarter FrontendJS</h4>
+<p>Finally, will put our Node skills to use and bring some of the techniques we learned to the frontend. In this portion of the class, we will:</p>
+<ol>
+<li>write scripts that take your javascript files and smush them all into one file</li>
+<li>write scripts that automatically minnify you code</li>
+<li>write scripts that "watch" your javascript files and does certain things everytime you change your code</li>
+<li>build out a reddit API based search app that uses NodejS philosophy and technology for writing javascript code (thanks to scripts from items 1, 2, and 3) </li>
+</ol>
 <h2 id="installing-node-js">INSTALLING NODE.JS</h2>
 <hr>
 <h3 id="what-is-node">WHAT IS NODE</h3>
@@ -721,7 +748,21 @@ exec([
 <pre><code class="lang-bash hljs">$ gulp
 </code></pre>
 <p>without any tasks. </p>
-
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<hr>
+<p>And finally, you are expect to rebuild <a href="http://buildcodeio.github.io/redditexample/index.html">this webpage</a> using all the techniques covered in this class. </p>
+<h3 id="requirements">Requirements</h3>
+<ol>
+<li>must have a gulp file set up</li>
+<li>browserify must be used to transform require() statments into one bundle.js file</li>
+<li>The individual codebase itself should be separated into javascript modules and then required into a single startup js file</li>
+</ol>
+<div class="github-card-wrap">
+    <div class="github-card" data-user="buildcodeio" data-repo="redditexample"></div>
+</div>
+<h3>
+    <a href="#topic-breakdown">Back to top</a>
+</h3>
 
 <div class="ui container stackable grid main-content" style="margin-top:50px;" id="footer">
     <div class="one column row">
@@ -736,6 +777,9 @@ exec([
                     <a href="https://highlightjs.org/" target="_blank">highlight.js</a>,
                 </strong>
                 <strong>pushups</strong>,
+                <strong>
+                    <a href="https://mottaquikarim.github.io/eggers" target="_blank">Eggers</a>,
+                </strong>
                 <strong>
                     <a href="https://open.spotify.com/track/4h95OrjKWYzVIai1EkvZbt" target="_blank">Stromae</a>,
                 </strong>
@@ -759,5 +803,6 @@ exec([
     <script src="javascript/libs/highlight.min.js"></script>
     <script src="/javascript/libs/marked.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+    <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
 </body>
 </html>
