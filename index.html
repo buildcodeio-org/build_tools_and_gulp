@@ -1,0 +1,808 @@
+<!doctype html>
+<html>
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0;'>
+    <meta charset="UTF-8">
+    <title>Build Tools and Gulp</title>
+
+    <link href='styles/libs/fonts.css' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='styles/semantic.min.css'>
+    <link rel="stylesheet" href="styles/libs/monokai.min.css">
+    <link rel='stylesheet' href='styles/main.css'>
+</head>
+<body id="book">
+    <div class="book-wrap">
+        <div class="book-wrap__inner">
+
+            <div class="book__col">
+                <div class="book__colwrap ui menu inverted vertical">
+                    <div class="item colheader colitem">
+                        <h1 class="title colheader__title">Build Tools <br/>and Gulp</h1>
+                        <br>
+                        <div class="description">An introduction to NodeJS for Frontend Javascript Development</div>
+                        <br>
+                    </div>
+                    <div class="item item__active">
+                        <b class="header"><a href="#topic-breakdown">Topic Breakdown</a></b>
+                    </div>
+                    <div class="item item__active">
+                        <b class="header"><a href="#class-rundown">Class Rundown</a></b>
+                    </div>
+
+                    <div class="item">
+                        <b class="header"><a href="#installing-node-js">Installing Node.JS</a></b>
+                        <div class="menu">
+                            <a class="item" href="#what-is-node">What is Node</a>
+                            <a class="item" href="#installing-node">Installing Node</a>
+                            <a class="item" href="#writing-programs-in-node">Writing Programs in Node</a>
+                            <a class="item" href="#exercises-for-installing-node">Exercises</a>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <b class="header"><a href="#npm-and-setting-up-nodejs-projects">NPM and Setting Up NodeJS projects</a></b>
+                        <div class="menu">
+                            <a class="item" href="#loading-libraries-in-nodejs">Loading Libraries in NodeJS</a>
+                            <a class="item" href="#npm-the-package-manager-for-nodejs">NPM: the Package Manager for NodeJS</a>
+                            <a class="item" href="#setting-up-a-node-project-with-npm">Setting Up a Node Project with NPM</a>
+                            <a class="item" href="#installing-a-dependency-for-your-project">Installing a Dependency for your Project</a>
+                            <a class="item" href="#using-a-custom-made-dependency-for-your-project">Using a Custom Made Dependency for your Project</a>
+                            <a class="item" href="#exercises-for-npm-and-node-projects">Exercises</a>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <b class="header"><a href="#using-node-for-frontend-javascript">Using Node for FrontEnd JavasScript</a></b>
+                        <div class="menu">
+                            <a class="item" href="#why-node-is-needed-on-the-frontend">Why Node is Needed on the FrontEnd</a>
+                            <a class="item" href="#how-nodejs-can-be-leveraged-to-use-require-in-frontend-js">How NodeJS can be Leveraged to Use Require() in FrontEnd JS</a>
+                            <a class="item" href="#automating-your-browserify-builds">Automating Your Browserify Builds</a>
+                            <a class="item" href="#setting-up-a-simple-gulp-file">Setting up a Simple Gulp File</a>
+                            <a class="item" href="#about-that-vinyl-source-stream-">About that Vinyl-Source-Stream</a>
+                            <a class="item" href="#exercises-for-using-node-on-frontend-javascript">Exercises</a>
+                        </div>
+                    </div>
+
+                    <div class="item item__active">
+                        <b class="header"><a href="#putting-it-all-together">Putting It All Together</a></b>
+                    </div>
+
+                </div>
+            </div><!-- book__col -->
+
+            <div class="book__content">
+                <div class="main-content js-content" style="padding-bottom: 100px;">
+
+<h2 id="build-tools-and-gulp">BUILD TOOLS AND GULP</h2>
+<hr>
+<p><em>Premise</em>: In this class, we will discuss how we can use NodeJS to make writing javascript easier to manage; we will talk about how we can automate “installing” dependencies such as jQuery and underscore using NPM and how the CommonJS spec</p>
+<h3 id="topic-breakdown">Topic Breakdown</h3>
+<h4 id="installing-nodejs">Installing NodeJS</h4>
+<ul>
+<li>we will begin by installing NodeJS</li>
+<li>we will write a few small program ins in node such as a simple “Hello Wrold!” program</li>
+</ul>
+<h4 id="npm-and-setting-up-node-projects">NPM and setting up Node Projects</h4>
+<ul>
+<li>we will discuss how to set up a “node project” </li>
+<li>we will discuss NPM, node’s package manager</li>
+<li>we will write a few small programs in Node to understand what the equivalent of <code>&lt;script src=’/js/..’&gt;&lt;/script&gt;</code> is in NodeJS</li>
+</ul>
+<h4 id="using-node-to-make-frontend-javascript-easier">Using Node to make frontend JavaScript easier</h4>
+<ul>
+<li>we will discuss some tools that exist in Node that make it easier to write frontend javascript</li>
+<li>we will talk about browserify, which allows us to pull in jQuery and other libraries without using a script tag</li>
+<li>we will talk about how we can “compile” our javascript and why we need to “compile” javascript in the first place</li>
+<li>we will create a small API based reddit search using the new concepts we learned</li>
+</ul>
+<h2 id="class-rundown">Class Rundown</h2>
+<hr>
+<p>Here is the agenda for today's class.</p>
+<h4 id="writing-node-scripts">Writing Node Scripts</h4>
+<p>We will kick things off by writing some simple NodeJS scripts, just to get the hang of how javascript works outside of the browser.</p>
+<h4 id="useful-node-scripts">Useful Node Scripts</h4>
+<p>Having build simple Node apps, we will learn how to use NPM (node package manager) to build out more useful node js scripts, including: </p>
+<ol>
+<li>a node powered file copy script</li>
+<li>a command line movie search</li>
+</ol>
+<p>We will learn how Node scripts can be used in your "everyday" coding habits...and make it more efficient.</p>
+<h4 id="writing-smarter-frontendjs">Writing Smarter FrontendJS</h4>
+<p>Finally, will put our Node skills to use and bring some of the techniques we learned to the frontend. In this portion of the class, we will:</p>
+<ol>
+<li>write scripts that take your javascript files and smush them all into one file</li>
+<li>write scripts that automatically minnify you code</li>
+<li>write scripts that "watch" your javascript files and does certain things everytime you change your code</li>
+<li>build out a reddit API based search app that uses NodejS philosophy and technology for writing javascript code (thanks to scripts from items 1, 2, and 3) </li>
+</ol>
+<h2 id="installing-node-js">INSTALLING NODE.JS</h2>
+<hr>
+<h3 id="what-is-node">WHAT IS NODE</h3>
+<p>Traditionally, the only place we could write and run our javascript programs was in browsers like Chrome, Firefox, and Safari. This severely limited what we could do with the javascript language since it that could only run in a program (the browser) and not directly from our computer.</p>
+<p>NodeJS is a project that takes all the parts of the browser code that reads, understands, and runs our javascript code and makes it work directly from our computer. In other words, Node.js allows us to run javascript that has access to stuff like the computer’s file system. This is super important because this move allows javascript to do all sorts of interesting stuff like:</p>
+<ol>
+<li>read files on your computer</li>
+<li>write new files on your computer</li>
+<li>access a database</li>
+<li>update a database</li>
+<li>run scripts over and over again on a certain time interval</li>
+</ol>
+<p>Points 1 and 2 will be super useful to us later on because we can use those abilities to run stuff like Gulp.js. Points 3 and 4 allow us to effectively write “backends” in javascript. Point 5 allows us to write all kinds of useful scripts and have them run say every night at midnight. (One example would be: a script that hits the facebook API at midnight every day and adds up all the likes you’ve given for that day).</p>
+<h3 id="installing-node">INSTALLING NODE</h3>
+<p>The best way would be directly from nodejs.org. Choose <strong>v5.6.0</strong></p>
+<h3 id="writing-programs-in-node">WRITING PROGRAMS IN NODE</h3>
+<p>Writing javascript code in NodeJS is a bit different from writing javascript code in the browser.</p>
+<p>Here's a quick breakdown of how you should set up a node program:</p>
+<h5 id="step-1-">Step 1:</h5>
+<p>Create a script.js file (you can call it anything you like, just needs to end in .js)</p>
+<h5 id="step-2-">Step 2:</h5>
+<p>Write javascript syntax as you normally would, but now inside this script.js</p>
+<p><strong>IMPORTANT NOTE</strong>: because NodeJS runs in your browser, certain frontend javascript concepts such as the <code>window</code> object or the DOM API don't exist (the javascript is not running in a webbrowser frame, so there is no window)</p>
+<h5 id="step-3-">Step 3:</h5>
+<p>Once you are ready to test your code, open up a terminal window and navigate to the folder your script.js lives in. Then, run <code>node script.js</code> to run the lines your wrote in your program.</p>
+<h3 id="exercises-for-installing-node">EXERCISES for Installing Node</h3>
+<p><strong>Write your first NodeJS Program.</strong></p>
+<p>Requirements: </p>
+<ol>
+<li>Create a script called hello.js</li>
+<li>Your program should print out "Hello, Wrold" when run from the terminal</li>
+</ol>
+<p><strong>For Looping in NodeJS</strong></p>
+<p>Requirements:</p>
+<ol>
+<li>Create a script called count.js</li>
+<li>Your program should print out the numbers 1 to 100 when run from the terminal</li>
+</ol>
+<h2 id="npm-and-setting-up-nodejs-projects">NPM and setting up NodeJS Projects</h2>
+<hr>
+<h3 id="loading-libraries-in-nodejs">LOADING LIBRARIES IN NODEJS</h3>
+<p>One important aspect of javascript programming that we specifically glazed over in the last section was the question of loading dependencies. In frontend programming,  we load in dependencies with <code>&lt;script&gt;</code> tags. For example, to load jQuery, we would do something like:</p>
+<pre><code class="lang-html hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>In node, however, we do something like this...</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jquery'</span>);
+</code></pre>
+<h3 id="npm-the-package-manager-for-nodejs">NPM: THE PACKAGE MANAGER FOR NODEJS</h3>
+<p>NPM stands for Node Package Manager (this comes built in to your NodeJS installation by default). Most other programming languages already have robust package management, when javascript finally moved off of the browser environment, NPM was created to be the javascript equivalent of pip (python's package manager) or composer (PHP's package manager).</p>
+<p>Package managers are how dependencies are loaded in traditional programming languages -- this reduces the need for including long form paths and script tags. Also, with a good package management system, the order in which we load in our dependencies no longer matter. </p>
+<p>The way NPM works is this: </p>
+<ul>
+<li>all packages that a node program needs lives in the same folder as that program</li>
+<li>you can load in packages that you create (we can call these "custom dependencies" <em>or</em> you can load in packages from the NPM registry (an online repo of all the published packages people have written).</li>
+<li>everything your program needs to run lives inside the same folder, so transferring your work to a different computer is very simple</li>
+</ul>
+<h3 id="setting-up-a-node-project-with-npm">SETTING UP A NODE PROJECT WITH NPM</h3>
+<p>All non-trivial node programs should be set up this way.</p>
+<h5 id="step-1-">Step 1:</h5>
+<p>Create a folder that will hold ALL the code and dependencies that your NodeJS program will need. Navigate to that directory in your terminal.</p>
+<h5 id="step-2-">Step 2:</h5>
+<p>In your terminal, type in this:</p>
+<pre><code class="lang-bash hljs">$ npm init
+</code></pre>
+<p>What this does is kick start all the folders and other stuff NPM needs to initialize dependencies for your projects.</p>
+<h5 id="step-3-">Step 3:</h5>
+<p>Follow the prompts that NPM asks you after running the init method. You can just press enter if you want the default values to go through.</p>
+<h5 id="step-4-">Step 4:</h5>
+<p>List out your files in terminal. You can do this by running the following:</p>
+<pre><code class="lang-bash hljs">$ ls -ahl
+</code></pre>
+<p>You should see a new file has been created, called <strong>package.json</strong>. This file is extremely important. It probably looks something like this: </p>
+<pre><code class="lang-json hljs">{
+  "<span class="hljs-attr">name</span>": <span class="hljs-string">"YOUR_PROJECT_NAME"</span>,
+  "<span class="hljs-attr">version</span>": <span class="hljs-string">"1.0.0"</span>,
+  "<span class="hljs-attr">description</span>": <span class="hljs-string">""</span>,
+  "<span class="hljs-attr">main</span>": <span class="hljs-string">"index.js"</span>,
+  "<span class="hljs-attr">scripts</span>": {
+    "<span class="hljs-attr">test</span>": <span class="hljs-string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span>
+  },
+  "<span class="hljs-attr">author</span>": <span class="hljs-string">""</span>,
+  "<span class="hljs-attr">license</span>": <span class="hljs-string">"ISC"</span>
+}
+</code></pre>
+<p>This file becomes more important if you are attempting to publish your NodeJS program to the NPM registry as a module other people can use. For the time being, the important things to note is that the <code>"main"</code> key should point to whatever file that contains your javascript program. </p>
+<h3 id="installing-a-dependency-for-your-project">INSTALLING A DEPENDENCY FOR YOUR PROJECT</h3>
+<p>Now that you have a shiny new NPM enabled project folder, it's time to start installing dependencies and making stuff do things!</p>
+<p>To begin, let's write a simple program that looks up a webpage and prints out the HTML source of that page in the console.</p>
+<p>Looking up a webpage is something that we <em>could</em> write on our own, but it would be much faster if we just used one of the many HTTP request libraries that exist on the NPM registry. </p>
+<p>I really like the <a href="https://www.npmjs.com/package/superagent"><strong>superagent</strong></a> library.</p>
+<p>Let's get started.</p>
+<h5 id="step-1-">Step 1:</h5>
+<p>Let's first install this package to our Node project.</p>
+<p>Make sure you navigate to your Node project first!!</p>
+<pre><code class="lang-bash hljs">$ npm install --save superagent
+</code></pre>
+<p>What this does is look up the package (or module, whatever you want to call it) called "superagent" in the NPM registry and download it to your project folder. </p>
+<p>The <code>--save</code> flag is super important, what this does is <strong>update your package.json automatically</strong> and lists this package as a dependency to your project. If you go to sublime and look at your package.json now, it should look something like this:</p>
+<pre><code class="lang-json hljs">{
+  "<span class="hljs-attr">name</span>": <span class="hljs-string">"YOUR_PROJECT_NAME"</span>,
+  "<span class="hljs-attr">version</span>": <span class="hljs-string">"1.0.0"</span>,
+  "<span class="hljs-attr">description</span>": <span class="hljs-string">""</span>,
+  "<span class="hljs-attr">main</span>": <span class="hljs-string">"index.js"</span>,
+  "<span class="hljs-attr">scripts</span>": {
+    "<span class="hljs-attr">test</span>": <span class="hljs-string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span>
+  },
+  "<span class="hljs-attr">author</span>": <span class="hljs-string">""</span>,
+  "<span class="hljs-attr">license</span>": <span class="hljs-string">"ISC"</span>,
+  "<span class="hljs-attr">dependencies</span>": {
+    "<span class="hljs-attr">superagent</span>": <span class="hljs-string">"^SOME_VERSION_NUMBER"</span>,
+  }
+}
+</code></pre>
+<p>You should also notice something else -- <strong>there is a new folder in your directory</strong>: the <strong>node_modules</strong> folder has been created.</p>
+<p>If you take a quick peek inside this folder, you'll see a folder called <strong>superagent</strong>. All the files needed for the superagent dependency that was downloaded from the NPM registry was added here automatically. If you add additional dependencies from the NPM registry, they will be installed automatically in the <strong>node_modules</strong> folder. </p>
+<p><strong> THE IMPORTANCE OF PACKAGE.JSON </strong></p>
+<p>Your <code>package.json</code> file describes all the dependencies your project needs to run. This is super important: if you need to move your project to a different computer (say a coworker wants to join the project or you want to deploy your project to a production server), all you have to do is run </p>
+<pre><code class="lang-bash hljs">$ npm install
+</code></pre>
+<p>If NPM finds a <code>package.json</code> in your project folder, it will install all the dependencies listed in the package.json automatically.</p>
+<p><strong>PROTIP</strong></p>
+<p>When you git commit stuff, do <em>NOT</em> commit your node_modules folder -- but <em>DO</em> commit your package.json. The <code>node_modules</code> folder can get very large in size which makes uploading / committing stuff annoying. </p>
+<p>But, since your package.json has all the dependencies you need, all you have to do is run <code>npm install</code> if you need to add additional dependencies on different machines running your code.</p>
+<p>To ignore node_modules files from git, do this:</p>
+<p>Open the <code>.gitignore</code> file on a git enabled project. Then, type: </p>
+<pre><code class="hljs">node_modules/*
+</code></pre><p>And save and commit.</p>
+<h5 id="step-2-">Step 2:</h5>
+<p>Whew, now that we have that out of the way, let's do some cool stuff with superagent!</p>
+<p>Since in your package.json, you pointed the <code>"main"</code> property to index.js, create an index.js file and type the following:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'superagent'</span>);
+</code></pre>
+<p>This is the equivalent of you including say jquery to a frontend javascript environment. Let's take a moment and dissect this line.</p>
+<p><strong><code>require</code></strong>: this is a special keyword and only works in NodeJS.  What require does is automatically look up and load the package you need for your particular program to work. </p>
+<p><strong><code>require('superagent')</code></strong>: as is clear from here, <code>require</code> is a function that takes in one argument -- this argument is a file path that Node looks for in your project directory. One super important thing to keep in mind: <strong>for packages that you download from the NPM registry <em>in this folder</em>, you just have to put the name of the package</strong> and node will know what to do. </p>
+<p>If you want to require a package that you wrote yourself or include an additional javascript file, all you have to do is: <code>require('./myAwesomePlugin')</code>; where <code>"myAwesomePlugin.js"</code> is the filename of a script that lives on the same level as the file you are calling that require in.</p>
+<p><strong><code>var request = require('superagent');</code></strong> basically what this does is load the superagent package from the <strong>node_modules</strong> folder. All dependency files in NodeJS can "return" one thing, this is exactly like how a function can "return" one thing. The <code>var request</code> is saving whatever the <code>require("superagent")</code> is returning so that you can use it in your index.js.</p>
+<h5 id="step-3-">Step 3:</h5>
+<p>Just for kicks, let's explore what is inside the <code>request</code> variable we saved. In your <code>index.js</code> file, type the following:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'superagent'</span>);
+
+<span class="hljs-built_in">console</span>.log( <span class="hljs-keyword">typeof</span> request, request );
+</code></pre>
+<p>To run this code, simply go back to terminal, navigate to your NodeJS project folder and run:</p>
+<pre><code class="lang-bash hljs">$ node index.js
+</code></pre>
+<p>Note how the <code>tyepof</code> the <code>request</code> variable is a function. Basically, this is <strong>exactly</strong> equivalent to how jQuery works. In fact, we can test out the equivalency pretty easily: jQuery is on NPM! (Though for our purposes right now, it's actually pretty useless).</p>
+<p>To install jQuery, run:</p>
+<pre><code class="lang-bash hljs">npm install --save jquery
+</code></pre>
+<p>Then, in your <code>index.js</code> type the following:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'superagent'</span>);
+<span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jquery'</span>);
+
+<span class="hljs-comment">// REQUEST VARIABLE LOGS</span>
+<span class="hljs-built_in">console</span>.log( <span class="hljs-string">'TYPEOF request: '</span>, <span class="hljs-keyword">typeof</span> request);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'==============================='</span>);
+<span class="hljs-built_in">console</span>.log( <span class="hljs-string">'REQUEST VARIABLE: '</span>, request );
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'==============================='</span>);
+
+<span class="hljs-comment">// $ VARIABLE LOGS</span>
+<span class="hljs-built_in">console</span>.log( <span class="hljs-string">'TYPEOF $: '</span>, <span class="hljs-keyword">typeof</span> $);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'==============================='</span>);
+<span class="hljs-built_in">console</span>.log( <span class="hljs-string">'$ VARIABLE: '</span>, $ );
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'==============================='</span>);
+</code></pre>
+<p>To run this code, simply go back in terminal, navigate to your NodeJS project folder and run:</p>
+<pre><code class="lang-bash hljs">$ node index.js
+</code></pre>
+<p>You should see something similar to this:</p>
+<pre><code class="lang-html hljs xml">TYPEOF request:  function
+===============================
+REQUEST VARIABLE:  function request(method, url) {
+  // callback
+  if ('function' == typeof url) {
+    return new Request('GET', method).end(url);
+  }
+
+  // url first
+  if (1 == arguments.length) {
+    return new Request('GET', method);
+  }
+
+  return new Request(method, url);
+}
+===============================
+TYPEOF $:  function
+===============================
+$ VARIABLE:  function ( w ) {
+                if ( !w.document ) {
+                    throw new Error( "jQuery requires a window with a document" );
+                }
+                return factory( w );
+            }
+===============================
+</code></pre>
+<p>Although this code looks daunting and difficult to read, the <strong>important</strong> takeaway here is that both the <code>request</code> variable and the <code>$</code> variable are both <strong>functions</strong> that return objects. </p>
+<p>This means we can use the <code>superagent</code> library in the same way we use jQuery:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-comment">// in jQuery we do something like:</span>
+<span class="hljs-keyword">var</span> myDiv = $(<span class="hljs-string">'div'</span>);
+<span class="hljs-comment">// then we can call methods on the myDiv variable:</span>
+myDiv.addClass(<span class="hljs-string">'foo'</span>);
+</code></pre>
+<p>(NOTE: if you ran the code above, you would not get expected results since jQuery does not run properly in NodeJS -- it's meant to work in browsers only).</p>
+<p>With that being said, both libraries are <em>javascript</em> libraries that are basically functions so in <code>superagent</code>, we can do something like:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-comment">// in superagent we do something like:</span>
+<span class="hljs-keyword">var</span> getRequest = request(<span class="hljs-string">'http://www.nytimes.com'</span>);
+<span class="hljs-comment">// then we can call methods on the getRequest variable</span>
+getRequest.end(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, res</span>) </span>{
+    <span class="hljs-built_in">console</span>.log( res.text );
+});
+</code></pre>
+<p>The result of the code block above would be a dump of all the HTML code that gets loaded when you type in <code>http://www.nytimes.com</code> into the web browser.</p>
+<p>And that's it! We have now successfully created a javascript program that leverages a dependency downloaded from the NPM registry.</p>
+<h3 id="using-a-custom-made-dependency-for-your-project">USING A CUSTOM MADE DEPENDENCY FOR YOUR PROJECT</h3>
+<p>What's really great about NodeJS is that we can also <code>require</code> scripts that we wrote (and not just packages we downloaded from the NPM registry). </p>
+<p>To create a custom package that you can include in your <code>index.js</code> program, do the following.</p>
+<h5 id="step-1-">Step 1:</h5>
+<p>Create a new file in the same folder as your index.js. You can call it anything you want -- let's call ours <code>config.js</code></p>
+<h5 id="step-2-">Step 2:</h5>
+<p>In our config file, let's add the following:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> config = {
+    urlToGET: <span class="hljs-string">'http://www.nytimes.com'</span>
+};
+</code></pre>
+<p>What this config.js file does for is is create an object where we can store some aspects of our program that we don't want to intermingle with our index.js. </p>
+<p>Today we are doing a get request for NYTimes, but maybe in the future we'll want to change that request to a different website. If we keep all the "specifics" of our app in a different file, we can easily switch them out without having to go inside our index.js that actually runs the important stuff (and this ensures we lower the risk of us making a typo or breaking something in that code).</p>
+<h5 id="step-3-">Step 3:</h5>
+<p>On the bottom of the config file, add this line:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> config = {
+    urlToGET: <span class="hljs-string">'http://www.nytimes.com'</span>
+};
+
+<span class="hljs-built_in">module</span>.exports = config;
+</code></pre>
+<p>The <code>module.exports</code> line is important -- this line is the equivalent to a <code>return</code> in a normal function. Because we set our <code>module.exports</code> to be the <code>config</code> object, when we include this file via the <code>require</code> statement in any other file, we will be able to access the properties of this object.</p>
+<p>So, in <code>index.js</code>, we could do:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-comment">// NOTE the './' we put before config -- this tells Node that</span>
+<span class="hljs-comment">// the config.js file is in the same level as index.js</span>
+<span class="hljs-keyword">var</span> config = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./config'</span>); <span class="hljs-comment">// the config variable now holds</span>
+<span class="hljs-comment">//  the object from above</span>
+
+<span class="hljs-comment">// in superagent we do something like:</span>
+<span class="hljs-keyword">var</span> getRequest = request( config.urlToGET ); <span class="hljs-comment">// note we are accessing </span>
+<span class="hljs-comment">// the url from the config object</span>
+
+<span class="hljs-comment">// then we can call methods on the getRequest variable</span>
+getRequest.end(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, res</span>) </span>{
+    <span class="hljs-built_in">console</span>.log( res.text );
+});
+</code></pre>
+<p>Now, the index.js program is entirely based on the config js properties.</p>
+<h3 id="exercises-for-npm-and-node-projects">EXERCISES for NPM and Node Projects</h3>
+<p><strong> Read files in NodeJS </strong></p>
+<p>Requirements:</p>
+<p>Create a NodeJS program that includes two files: </p>
+<ol>
+<li>config.js</li>
+<li>index.js</li>
+</ol>
+<p>In your <code>config.js</code>, have a property called <code>fileToRead</code> that takes a file path. In <code>index.js</code>, use Node's built in <code>fs</code> module (you can just require it as you would an NPM registry module) to print out the contents of the <code>fileToRead</code> file to terminal.</p>
+<p><strong> Write a file in NodeJS </strong></p>
+<p>Requirements:</p>
+<p>Create a NodeJS program that includes two files:</p>
+<ol>
+<li>config.js</li>
+<li>index.js</li>
+</ol>
+<p>In your <code>config.js</code>, have the following properties:</p>
+<ol>
+<li><code>fileName</code></li>
+<li><code>fileContent</code></li>
+</ol>
+<p>In your <code>index.js</code> file, use Node's built in <code>fs</code> module to write a file called whatever is set in <code>config.fileName</code> and set the content of the file to equal <code>config.fileContent</code></p>
+<p><strong> Create a simple copy and paste script in NodeJS </strong></p>
+<p>Requirements;</p>
+<p>This will be a fun one: write a NodeJS script that lets you copy a file from one location into another location. This problem is challenging but very rewarding!</p>
+<ol>
+<li>Create a new NodeJS project and <code>npm install</code> the <a href="https://www.npmjs.com/package/commander"><code>commander</code></a> library</li>
+<li>NOTE: it's in your best interest to copy and paste the example(s) they have on the NPM page to see for yourself how the library works</li>
+<li>Write a program that expects two command line inputs:<ul>
+<li>a file path (to an existing file) to copy</li>
+<li>a filename to copy to</li>
+</ul>
+</li>
+<li>Your program should get angry if the user does not specify a file path to copy from. It should use Node's <code>fs</code> module to read the content of the file to copy from and write a new file with that content, thus <em>copying</em> the file.</li>
+</ol>
+<p>When you run your program, let's call it <code>copy.js</code>, it should look something like:</p>
+<pre><code class="lang-bash hljs">$ node copy.js -copyfrom awesomesauce.txt -copyto superawesome.txt
+</code></pre>
+<p><strong> Create a command line based movie search client </strong></p>
+<p>Requirements:</p>
+<p>This one will also be fun. Take a look at the <a href="http://www.omdbapi.com/">OMDB API</a>. This API allows you to search for movies by doing a simple AJAX GET request. In this exercise, we will explore how we can perform a similar request using the <code>superagent</code> NPM module from earlier but combine it with the <code>commander</code> module to make it easy to search for stuff from the command line.</p>
+<ol>
+<li>Create a new NodeJS project and install <code>superagent</code> and <code>commander</code>.</li>
+<li>In your <code>index.js</code> (or whatever file your <code>"main"</code> key in<code>package.json</code> points to), set up commander to process the <code>search</code> endpoint of the OMDB API.</li>
+</ol>
+<p>Here is what a sample search from OMDB API looks like:</p>
+<pre><code class="lang-html hljs xml">http://www.omdbapi.com/?t=the+godfather&amp;y=&amp;plot=short&amp;r=json
+</code></pre>
+<p>Your program should expect inputs like this:</p>
+<pre><code class="lang-bash hljs">$ node search.js -t the godfather -y 1977 -plot short -r json
+</code></pre>
+<p>From that input, it should assemble the URL above and then use <code>superagent</code> to perform a GET request. The only input your program should need is the <code>-t</code> argument -- everything else can be blank if needed.</p>
+<p>The output should be formatted like this:</p>
+<pre><code class="lang-bash hljs">$ Search results:
+=================
+Title: The Godfather
+Year: 1992
+Rated: R
+Plot: The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.
+=================
+</code></pre>
+<p>The above should be repeated if more than one result is found.</p>
+<h2 id="using-node-for-frontend-javascript">Using Node for frontend JavaScript</h2>
+<hr>
+<p>Let's kick things off by discussing <strong>why</strong> we'd need NodeJS to run frontend javascript. And then we'll dive into <strong>how</strong> we can actually pull this off.</p>
+<h3 id="why-node-is-needed-on-the-frontend">WHY NODE IS NEEDED ON THE FRONTEND</h3>
+<p>The method of using <code>require</code> to pull in javascript dependencies is called the <em>Common JS</em> specification of javascript. It's a scheme for making dependency management in javascript easier. If you've ever worked on a large frontend project with multiple dependencies and javascript files, you'll know what a nightmare it is to load in js files with multiple <code>&lt;script&gt;</code> tags. </p>
+<p>However, the Common JS method is refreshingly simple. We no longer have to worry about <code>&lt;script&gt;</code> tags or the order they are placed in -- we just <code>require</code> them and call it a day. Plus, many plugins and newer javascript files are increasingly being published on the NPM registry, which makes is super easy to install and use dependencies.</p>
+<p>...the only problem is this: <strong>the <code>require</code> construct is not supported in browsers!</strong></p>
+<p>And this leads us to <strong>how</strong> we can use NodeJS to run frontend javascript.</p>
+<h3 id="how-nodejs-can-be-leveraged-to-use-require-in-frontend-js">HOW NODEJS CAN BE LEVERAGED TO USE REQUIRE() IN FRONTEND JS</h3>
+<p>Even though <code>require</code> is not supported in the browser, <em>it is</em> supported in NodeJS. </p>
+<p><strong>Browserify</strong> is a npm module that takes your NodeJS programs (with all of its <code>require</code> calls) and creates a <strong>single</strong> js file that you can include as a <code>&lt;script&gt;</code> tag in your HTML files. Basically, it takes something like this:</p>
+<p><strong> index.js </strong></p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> config = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./config'</span>);
+
+<span class="hljs-built_in">console</span>.log( config.foo );
+</code></pre>
+<p><strong> config.js </strong></p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> config = {
+    foo: <span class="hljs-string">'Hello, Wrold!'</span>
+};
+
+<span class="hljs-built_in">module</span>.exports = config;
+</code></pre>
+<p>and builds a file that looks like this:</p>
+<p><strong> bundled.js </strong></p>
+<pre><code class="lang-javascript hljs">(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">e</span>(<span class="hljs-params">t,n,r</span>)</span>{<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">s</span>(<span class="hljs-params">o,u</span>)</span>{<span class="hljs-keyword">if</span>(!n[o]){<span class="hljs-keyword">if</span>(!t[o]){<span class="hljs-keyword">var</span> a=<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">require</span>==<span class="hljs-string">"function"</span>&amp;&amp;<span class="hljs-built_in">require</span>;<span class="hljs-keyword">if</span>(!u&amp;&amp;a)<span class="hljs-keyword">return</span> a(o,!<span class="hljs-number">0</span>);<span class="hljs-keyword">if</span>(i)<span class="hljs-keyword">return</span> i(o,!<span class="hljs-number">0</span>);<span class="hljs-keyword">var</span> f=<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Cannot find module '"</span>+o+<span class="hljs-string">"'"</span>);<span class="hljs-keyword">throw</span> f.code=<span class="hljs-string">"MODULE_NOT_FOUND"</span>,f}<span class="hljs-keyword">var</span> l=n[o]={exports:{}};t[o][<span class="hljs-number">0</span>].call(l.exports,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>{<span class="hljs-keyword">var</span> n=t[o][<span class="hljs-number">1</span>][e];<span class="hljs-keyword">return</span> s(n?n:e)},l,l.exports,e,t,n,r)}<span class="hljs-keyword">return</span> n[o].exports}<span class="hljs-keyword">var</span> i=<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">require</span>==<span class="hljs-string">"function"</span>&amp;&amp;<span class="hljs-built_in">require</span>;<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> o=<span class="hljs-number">0</span>;o&lt;r.length;o++)s(r[o]);<span class="hljs-keyword">return</span> s})({<span class="hljs-number">1</span>:[<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">require,module,exports</span>)</span>{
+<span class="hljs-keyword">var</span> config = {
+    foo: <span class="hljs-string">'Hello, Wrold'</span>
+};
+
+<span class="hljs-built_in">module</span>.exports = config;
+
+},{}],<span class="hljs-number">2</span>:[<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">require,module,exports</span>)</span>{
+<span class="hljs-keyword">var</span> config = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./config'</span>);
+
+<span class="hljs-built_in">console</span>.log( config.foo );
+
+},{<span class="hljs-string">"./config"</span>:<span class="hljs-number">1</span>}]},{},[<span class="hljs-number">2</span>]);
+</code></pre>
+<p>Even though this code looks crazy, the important thing to note here is that in this <em>bundled.js</em> file, we see that the config code comes before our <code>console.log</code> code since the <code>index.js</code> file <em>depends</em> on the <code>config.js</code> file.</p>
+<p><strong>In other words, browserify will resolve all of your dependencies and generate a file with the content of all the files in order of use</strong>. Although <code>require</code> is not defined in the browser by default, the file that browserify generates <strong>is safe to use in the browser</strong>.</p>
+<p>You run browserify like so:</p>
+<pre><code class="lang-bash hljs">./node_modules/.bin/browserify <span class="hljs-_">-e</span> index.js -o bundled.js
+</code></pre>
+<p>Where:</p>
+<p><strong> -e, --entry </strong>: the main "entry" file of your program, this is basically the same as what you have listed as the <strong>"main"</strong> keyword in your <code>package.json</code></p>
+<p><strong>-o, --output</strong>: the output file where your concatenated code will be written to.</p>
+<p>Note how browserify lives in the node_modules folder -- it's just another javascript file! The way it works is it opens up your index.js files (using the same technique you used earlier to read the file contents). Then, it converts your code into what's called an <em>Abstract Syntax Tree</em>, which allows it to pull out all the <code>require</code> statements. It then opens up all the files from the require statements and performs the AST operation on those files as well. When it's done, it builds (ie: writes, using the same technqiue you used to write a file earlier) a single file called whatever you state in the <em>--output</em> parameter -- in the order of your <code>require</code> statements in your <code>index.js</code> file.</p>
+<h3 id="automating-your-browserify-builds">AUTOMATING YOUR BROWSERIFY BUILDS</h3>
+<p>As great as browserify is, re-running a node script for <strong>every</strong>. <strong>single</strong>. <strong>change</strong>. you make is super annoying and inefficient.</p>
+<p>In order to rectify this, we will use another <strong>awesome</strong> NodeJS project called <code>gulp</code>. Gulp is a taskrunner that allows you to create <code>tasks</code> that are common things you do with your code (not programming things, but more like code organization things such as running browserify).</p>
+<p>We will see that there are a lot of benefits of having a gulp taskrunner set up for your NodeJS project, but for starters we will explore how we can automate the browserify script with gulp.</p>
+<h3 id="setting-up-a-simple-gulp-file">SETTING UP A SIMPLE GULP FILE</h3>
+<p>Before we delve into <em>how</em> gulp works, let's set up a simple example and see it in action.</p>
+<h5 id="step-1-">Step 1:</h5>
+<p>You'll need to install the proper NPM packages to make gulp work. Gulp itself is an NPM module, but the way we will install it is <em>slightly</em> different from how we usually install stuff:</p>
+<pre><code class="lang-bash hljs">$ npm install -g gulp
+</code></pre>
+<p>Note the <strong><code>-g</code></strong> flag in place of the <strong><code>--save</code></strong> flag. What this does is install gulp as a <strong>global</strong> NPM package that you can use from <strong>anywhere</strong> in your terminal. Because gulp is a tool you will probably be using a lot, it makes sense to include gulp globally. Once you do this, you can run gulp simply by doing this:</p>
+<pre><code class="lang-bash hljs">$ gulp
+</code></pre>
+<p> instead of doing this:</p>
+<pre><code class="lang-bash hljs">$ ./node_modules/.bin/gulp
+</code></pre>
+<p>(which, note, is how we ran <strong>browserify</strong> earlier).</p>
+<h5 id="step-2-">Step 2:</h5>
+<p>You will also need to install another NPM module:</p>
+<pre><code class="lang-bash hljs">$ npm install --save vinyl-source-stream
+</code></pre>
+<p>We will discuss what this module does and why it is needed later on. For now, let's move on and start coding!</p>
+<h5 id="step-3-">Step 3:</h5>
+<p>Now that we have the proper files (and assuming you already have browserify installed on this folder), let's create a file in your Node JS project folder called <strong><code>gulpfile.js</code></strong>. It's super important that this file is called gulpfile.js -- gulp will look for this file specifically when you run it.</p>
+<p>Inside your <strong><code>gulpfile.js</code></strong>, add the following:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-comment">// require the necessary dependencies</span>
+<span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>);
+<span class="hljs-keyword">var</span> source = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vinyl-source-stream'</span>);
+<span class="hljs-keyword">var</span> browserify = <span class="hljs-built_in">require</span>(<span class="hljs-string">'browserify'</span>); <span class="hljs-comment">// yes, browserify can </span>
+<span class="hljs-comment">// also be called inside a .js file in Node</span>
+
+<span class="hljs-comment">// set up tasks</span>
+gulp.task(<span class="hljs-string">'browserify'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// this task will run browserify, just like we did from terminal</span>
+    <span class="hljs-comment">// but inside this js file instead</span>
+    <span class="hljs-keyword">return</span> browserify(<span class="hljs-string">'./index.js'</span>)
+        <span class="hljs-comment">// this .bundle() method walks through the code</span>
+        <span class="hljs-comment">// and concatenates all the dependencies in order</span>
+        .bundle()
+        <span class="hljs-comment">// here, we take the concatenated dependencies</span>
+        <span class="hljs-comment">// and "pipe" it to the bundled.js file</span>
+        .pipe( source( <span class="hljs-string">'bundled.js'</span> ) )
+        <span class="hljs-comment">// then we write this file to the current directory</span>
+        .pipe( gulp.dest(<span class="hljs-string">'./'</span>) );
+});
+
+<span class="hljs-comment">// this is the awesome part</span>
+<span class="hljs-comment">// with "watch", we can tell gulp to "watch" all the files</span>
+<span class="hljs-comment">// in this directory and IF any of those files changes</span>
+<span class="hljs-comment">// we instruct it to call our browserify task</span>
+gulp.watch(<span class="hljs-string">'*'</span>, [<span class="hljs-string">'browserify'</span>]);
+</code></pre>
+<h5 id="step-4-">Step 4:</h5>
+<p>Finally, let's take this bad boy out for a test drive. In terminal, type in </p>
+<pre><code class="lang-bash hljs">$ gulp browserify
+</code></pre>
+<p>You should see something like:</p>
+<pre><code class="lang-bash hljs">$ gulp browserify
+[11:53:19] Using gulpfile ~/[PATH_TO_YOUR_NODE_PROJECT]/gulpfile.js
+[11:53:19] Starting <span class="hljs-string">'browserify'</span>...
+[11:53:19] Finished <span class="hljs-string">'browserify'</span> after 101 ms
+[11:53:19] Starting <span class="hljs-string">'browserify'</span>...
+[11:53:19] Finished <span class="hljs-string">'browserify'</span> after 28 ms
+</code></pre>
+<p>And you're good to go! Keep this terminal tab open -- it will log your gulp changes as you update your javascript files. If you want to quit watching, simply press <strong><code>Ctrl+C</code></strong> and <strong>then</strong> exit your terminal.</p>
+<p>Now, go back to your index.js file and make a change and save -- you should notice that your terminal tab updates and looks kind of like this:</p>
+<pre><code class="lang-bash hljs">$ bash
+[11:53:19] Using gulpfile ~/Desktop/foo/gulpfile.js
+[11:53:19] Starting <span class="hljs-string">'browserify'</span>...
+[11:53:19] Finished <span class="hljs-string">'browserify'</span> after 101 ms
+[11:53:19] Starting <span class="hljs-string">'browserify'</span>...
+[11:53:19] Finished <span class="hljs-string">'browserify'</span> after 28 ms
+
+
+[11:53:37] Starting <span class="hljs-string">'browserify'</span>...
+[11:53:37] Finished <span class="hljs-string">'browserify'</span> after 22 ms
+[11:53:37] Starting <span class="hljs-string">'browserify'</span>...
+[11:53:37] Finished <span class="hljs-string">'browserify'</span> after 30 ms
+</code></pre>
+<p>Basically, when you run gulp, it will execute the <code>browserify</code> task <strong>once</strong>, then begin watching the directory. Whenever it notices a file change, it will re-run the gulp task.</p>
+<p>The main benefit here is that you can now write your frontend javascript code using <code>require</code> and not have to worry about <code>script</code> tags ever again!</p>
+<h3 id="about-that-vinyl-source-stream-">ABOUT THAT VINYL-SOURCE-STREAM...</h3>
+<p>Before we move on, we have to address that mysterious NPM module we installed -- <code>vinyl-source-stream</code>. </p>
+<p>To understand why we needed that package in the first place, we have to understand gulp's main mantra: <strong>everything is a stream</strong>.</p>
+<p>A <strong>stream</strong> is a special kind of javascript object that works very well with NodeJS. On the most basic level, it's an object that does a specific thing (ie: reads a file, writes a file, etc).</p>
+<p><strong>BUT!</strong> the main difference is that instead of doing the traditional method and callback approach, ie:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+fs.readFile(<span class="hljs-string">'./index.js'</span>, <span class="hljs-string">'utf-8'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> err, data </span>) </span>{
+<span class="hljs-comment">// data contains the full content of the file</span>
+});
+</code></pre>
+<p>streams work a little like this:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">var</span> readableStream = fs.createReadStream(<span class="hljs-string">'file.txt'</span>);
+<span class="hljs-keyword">var</span> data = <span class="hljs-string">''</span>;
+<span class="hljs-keyword">var</span> chunk;
+
+readableStream.on(<span class="hljs-string">'readable'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">while</span> ((chunk=readableStream.read()) != <span class="hljs-literal">null</span>) {
+        data += chunk;
+    }
+});
+
+readableStream.on(<span class="hljs-string">'end'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(data)
+});
+</code></pre>
+<p>Initially, this may look a little unfamiliar and weird -- it kind of is. The main advantage to using streams is that once open, they can be manipulated in various ways before closing.</p>
+<p>For example, continuing with our previous example of the readableStream, if we wanted to write a copying program similar to what we wrote earlier, with streams we can do something like the following:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">var</span> readableStream = fs.createReadStream(<span class="hljs-string">'file.txt'</span>);
+<span class="hljs-keyword">var</span> writeableStream = fs.createWriteStream(<span class="hljs-string">'file_copy.txt'</span>);
+
+<span class="hljs-comment">// pipe lets us easily take the stream from readableStream</span>
+<span class="hljs-comment">// and push or "pipe" it into the write stream for writeableStream</span>
+readableStream
+    .pipe( writeableStream, { end: <span class="hljs-literal">false</span> } );
+<span class="hljs-comment">// if we want to control what happens once they are both done</span>
+<span class="hljs-comment">// we can add the .on() event we saw in previous example</span>
+readableStream
+    .on(<span class="hljs-string">'end'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'copied!'</span>);
+    });
+</code></pre>
+<p>Also note that streams are <strong>asynchronous</strong> meaning if you want something to happen <em>after</em> the stream stuff is complete, it needs to be in an 'end' event somewhere.</p>
+<p>Also note how similar the code above is to our gulp task, in fact creating and piping streams is exactly what Gulp does and this is the reason why we have syntax like:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">return</span> browserify(<span class="hljs-string">'./index.js'</span>)
+    .bundle()
+    .pipe( source( <span class="hljs-string">'bundled.js'</span> ) )
+    .pipe( dest( <span class="hljs-string">'./'</span> ) );
+</code></pre>
+<p>What is happening in the code snippet above is gulp is creating a new Stream which generates a string with the full browserified javascript code, then it is "piping" that stream in a file called bundled and saving it to a particular directory.</p>
+<p>In other words, if we wanted to make other changes to our javascript code before saving it to bundled.js, all we have to do is use the <strong>pipe()</strong> method.</p>
+<p>So for example, if we wanted to minify our bundled.js code, all we would have to do is:</p>
+<pre><code class="lang-bash hljs">$ npm install --save gulp-uglify gulp-streamify
+</code></pre>
+<p>Then, in our gulpfile.js</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>);
+<span class="hljs-keyword">var</span> source = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vinyl-source-stream'</span>);
+<span class="hljs-keyword">var</span> browserify = <span class="hljs-built_in">require</span>(<span class="hljs-string">'browserify'</span>);
+<span class="hljs-keyword">var</span> uglify = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-uglify'</span>);
+<span class="hljs-keyword">var</span> streamify = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-streamify'</span>);
+
+gulp.task(<span class="hljs-string">'browserify'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> browserify(<span class="hljs-string">'./foo.js'</span>)
+        .bundle()
+        .pipe( source( <span class="hljs-string">'bundled.js'</span> ) )
+        <span class="hljs-comment">// we take our browserified stream and run it through</span>
+        <span class="hljs-comment">// uglify's minifier</span>
+        .pipe( streamify( uglify() ) )
+        .pipe( gulp.dest(<span class="hljs-string">'./'</span>) );
+});
+
+gulp.watch(<span class="hljs-string">'*'</span>, [<span class="hljs-string">'browserify'</span>]);
+</code></pre>
+<p>Notice how we added the <code>gulp-uglify</code> package -- this is a port of the original uglify package that was built to work with gulp. However, gulp went through a few updates itself and now works purely with streams. This is where <code>gulp-streamify</code> comes in. It turns gulp plugins into Stream objects so that we can pipe them as seen in the examples above.</p>
+<p>If we wanted to add additional functionality, like sourcemaps generation, events that handle errors and so on, we could do so simply by adding more pipes to the task above.</p>
+<p>In the exercises that follow, we will explore a wide array of other tasks we can run with gulp. Some of these exercises we will complete as a class and others you will have to work in groups to complete. </p>
+<h3 id="exercises-for-using-node-on-frontend-javascript">EXERCISES for using Node on frontend javascript</h3>
+<p><strong> Add sourcemap support to the browserify task </strong></p>
+<p>Background:</p>
+<p>We are browserifying and uglifying our code! This is great but it's hard to track down an error that happens on our browser when the js runs.</p>
+<p>Luckily, sourcemaps can help us solve this problem. Sourcemaps basically take minified files and point them to places in the actual codebase, so we can easily track down <strong>where</strong> the error is occuring.</p>
+<p>Requirements:</p>
+<ol>
+<li>Install the gulp-sourcemap package </li>
+<li>In the appropriate task, pipe in <code>sourcemaps.init({loadMaps: true})</code> so that your bundled.js files can point back to the proper NodeJS script where the error is happening</li>
+</ol>
+<p><strong> Add a config.js dependency to your gulpfile </strong></p>
+<p>Background:</p>
+<p>Just like before, let's try and separate the specifics of our app from the actual implementation logic. There's literally no reason not to since we have <code>require</code> at our disposal. Plus, chances are you might want to resuse your gulpfile setup across multipe projects,  so having a config.js where you can quickly update entry points and bundle names would be super useful.</p>
+<p>Requirements:</p>
+<p>Create a config.js file that looks like this:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> config = {
+    dev: { <span class="hljs-comment">// the values of the keys below can be different</span>
+        entryPoint: <span class="hljs-string">"index.js"</span>,
+        bundleName: <span class="hljs-string">"bundle.js"</span>,
+        bundleDest: <span class="hljs-string">"./"</span>
+    }
+}
+</code></pre>
+<p>The reason why we are using this configuration is because later on, you might want to have different "build environments". For example, maybe you don't want to pipe in sourcemaps for the production build of your code -- in that case, all you have to do is create a new key in your config and write a task in your gulpfile that will ignore the sourcemap pipe.</p>
+<p>Also, in an upcoming exercise, you will handle building and watching your CSS files with gulp as well, to make that process easy, you can just add a new key called "css" and specify entrypoints, bundleDests for that here as well.</p>
+<ol>
+<li>Include the above config.js in your gulpfile</li>
+<li>create a gulp task called "dev" or "dev-js" that bundles, uglifies, sourcemaps, and writes out your js file to wherever you specify in <code>config.dev.entryPoint</code>, <code>config.dev.bundleName</code>, <code>config.dev.bundleDest</code>.</li>
+</ol>
+<p><strong> Add LESS support to gulp </strong></p>
+<p>Background:</p>
+<p>LESS is an environment that allows you to write smarter CSS. It's a superset of CSS meaning all of your regular CSS will work just fine, but you can also do some really cool stuff like save certain colors and font-sizes as variables and create "mixins", basically the CSS-equivalent of functions.</p>
+<p>In this exercise, we will implement LESS support with gulp</p>
+<p>Requirements:</p>
+<ol>
+<li>Go to the <a href="http://lesscss.org/">less</a> website and follow the Get Started guide</li>
+<li>Install the NPM <code>gulp-less</code> package.</li>
+<li>In your config.js, add a new key to the object called "less" and set the entrypoint and bundleName, bundleDest properties</li>
+<li>Implement a gulp task that takes an entry point, runs less on it and builds a css bundle file. Don't forget to pipe in <code>sourcemaps</code> so you can debug!</li>
+<li>Add this task to your <code>gulp.watch</code> so that your css will "recompile" everytime you make a change to your .less files</li>
+</ol>
+<p><strong> HTML Minnify </strong></p>
+<p>Background:</p>
+<p>Just like JS and CSS can be minified, HTML can <em>also</em> be minnified. The major usecase of this is compressed HTML can load faster in the browser.</p>
+<p>Requirements:</p>
+<ol>
+<li>Install the <code>gulp-htmlmin</code> plugin from NPM</li>
+<li>Add a new block to your config.js that controls your HTML file entry points, bundles, etc</li>
+<li>Create a new task, called 'html-min' that will minify your HTML code when the task is run. Don't forget to pipe in <code>sourcemaps</code> so you can debug!</li>
+<li>Add this task to your <code>gulp.watch</code> so that your HTML recompiles whenever you make changes to it</li>
+</ol>
+<p><strong> Notifications on task completion </strong></p>
+<p>Background:</p>
+<p>Now that we have a more fully functional task runner, it would be great if we could have a better way to tell once the tasks have completed.</p>
+<p>We will approach this in two ways:</p>
+<ol>
+<li>We will have a simple output in console that informs us that gulp has completed building stuff</li>
+<li>For Mac users, we will also add a custom desktop notification command that will inform us no matter where we are (so we don't have to stare at the terminal waiting for task to complete)</li>
+</ol>
+<p>Requirements:</p>
+<ol>
+<li>Install NPM <code>gulp-util</code> package</li>
+<li>For your js and css tasks, bind two events: the <code>end</code> and <code>error</code> events and use the <code>gulp-util</code> package pipe out the results to console</li>
+</ol>
+<p>NOTE: you can just use console.log if you'd prefer, but gulp-util gives us some nice preformatting -- that's the only reason we are using it. Also, to help you guys practice reading documentation! Withholding examples on how to use this package on purpose!</p>
+<p>For Mac Users:</p>
+<p>Consider this:</p>
+<pre><code class="lang-javascript hljs"><span class="hljs-keyword">var</span> exec = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>).exec;
+
+exec([
+    <span class="hljs-string">"osascript -e"</span>,
+    <span class="hljs-string">"'display notification"</span>,
+    <span class="hljs-string">"\"SOME_MESSAGE_HERE\""</span>,
+    <span class="hljs-string">"with title"</span>,
+    <span class="hljs-string">"\"SOME TITLE HERE\""</span>, 
+    <span class="hljs-string">"sound name \"Tink\"'"</span>
+].join(<span class="hljs-string">' '</span>));
+</code></pre>
+<p>If you'd like to have the desktop notification support, simple copy and paste the lines above to your "end" and "error" callbacks and update the message and titles appropriately.</p>
+<p><strong> Live Reload </strong></p>
+<p>Background:</p>
+<p>Another cool thing we can do with gulp is set up the environment so that if a webpage with our code is open in the browser, once the task is complete we can trigger a reload on the browser.</p>
+<p>To pull this off, we'll need to include another gulp-plugin and -- you guessed it -- pipe another transformation to the stream.</p>
+<p>Requirements:</p>
+<ol>
+<li>Install the <code>gulp-livereload</code> package from NPM</li>
+<li>In the relevant tasks, pipe in the livereaload transform once the bundling and dest() tasks have completed.</li>
+</ol>
+<p><strong> Babel Support </strong></p>
+<p>Background:</p>
+<p>ECMA6 (or ECMA2015, whatever you want to call it) is out! Javascript 6 has some cool features! Everyone is doing it (including facebook) -- with gulp, you can too! </p>
+<p>Requirements:</p>
+<ol>
+<li>Install <code>babelify</code> on NPM</li>
+<li>In your javascript gulp task, right before bundle(), add the following:</li>
+</ol>
+<pre><code class="lang-javascript hljs">.transform( <span class="hljs-string">"babelify"</span>, {presets: [<span class="hljs-string">"es2015"</span>]} )
+</code></pre>
+<p>As you can see, you can add other transforms as you see fit. For example, if you were using React on this project, all you'd have to do is add the "react" string to that array to have react transformations on your ask (of course, you'd also need to require a few more NPM plugins that actually load React into your project...but that's a different story and a different class!)</p>
+<p><strong> Shortcuts </strong></p>
+<p>Background:</p>
+<p>The best part about <code>gulp</code> tasks are that you can mix and match them! For example, I can do something like:</p>
+<pre><code class="lang-javascript hljs">gulp.task(<span class="hljs-string">'dev'</span>, [<span class="hljs-string">'js-dev'</span>, <span class="hljs-string">'less'</span>])
+</code></pre>
+<p>And now, whenever I type in:</p>
+<pre><code class="lang-bash hljs">$ gulp dev
+</code></pre>
+<p>my <code>js-dev</code> and <code>less</code> tasks will automatically run. Given that, create a few gulp shortcut tasks that run tasks as you need them. One good set of shortcuts could be a <code>prod</code> and <code>dev</code> task that run tasks specific to production builds vs dev builds (for example, you can minify <em>only</em> in production builds but leave it alone on dev builds, etc).</p>
+<p>And finally, you can add a <code>default</code> task to gulp, which will run if you do:</p>
+<pre><code class="lang-bash hljs">$ gulp
+</code></pre>
+<p>without any tasks. </p>
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<hr>
+<p>And finally, you are expect to rebuild <a href="http://buildcodeio.github.io/redditexample/index.html">this webpage</a> using all the techniques covered in this class. </p>
+<h3 id="requirements">Requirements</h3>
+<ol>
+<li>must have a gulp file set up</li>
+<li>browserify must be used to transform require() statments into one bundle.js file</li>
+<li>The individual codebase itself should be separated into javascript modules and then required into a single startup js file</li>
+</ol>
+<div class="github-card-wrap">
+    <div class="github-card" data-user="buildcodeio" data-repo="redditexample"></div>
+</div>
+<h3>
+    <a href="#topic-breakdown">Back to top</a>
+</h3>
+
+<div class="ui container stackable grid main-content" style="margin-top:50px;" id="footer">
+    <div class="one column row">
+        <div class="column" style="font-size:16px;text-align: center;">
+            <div class="description">
+                <span>Built by your boy</span>
+                <strong>
+                    <a href="https://twitter.com/the_taqquikarim" target="_blank">Taq Karim</a>
+                </strong>
+                <span>with</span>
+                <strong>
+                    <a href="https://highlightjs.org/" target="_blank">highlight.js</a>,
+                </strong>
+                <strong>pushups</strong>,
+                <strong>
+                    <a href="https://mottaquikarim.github.io/eggers" target="_blank">Eggers</a>,
+                </strong>
+                <strong>
+                    <a href="https://open.spotify.com/track/4h95OrjKWYzVIai1EkvZbt" target="_blank">Stromae</a>,
+                </strong>
+                <span>and a</span>
+                <strong>can of redbull</strong>.
+                <br/>
+                <span>This content is a product of </span>
+                <strong>
+                    <a href="http://www.buildcode.io">buildcode.io</a>.
+                </strong>
+            </div>
+        </div>
+    </div>
+</div>
+                </div>
+            </div><!-- book__content -->
+        </div>
+    </div>
+
+    <script src='/javascript/libs/jquery.min.js'></script>
+    <script src="javascript/libs/highlight.min.js"></script>
+    <script src="/javascript/libs/marked.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+</body>
+</html>
